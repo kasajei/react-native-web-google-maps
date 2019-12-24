@@ -1,0 +1,58 @@
+{
+  "name": "react-native-web-google-maps",
+  "version": "0.0.0",
+  "description": "Google map library for react that allows rendering components as markers 🎉",
+  "main": "dist/index.js",
+  "main-es": "src/index.js",
+  "scripts": {
+    "prepublish": "yarn build",
+    "build": "mkdir -p dist && babel src --out-dir dist",
+    "test:lint": "yarn eslint . --quiet",
+    "test": "yarn test:lint"
+  },
+  "babel": {
+    "presets": [
+      "react-native"
+    ]
+  },
+  "files": [
+    "dist",
+    "src",
+    "yarn.lock"
+  ],
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-react-native": "^4.0.0",
+    "eslint": "^5.15.3",
+    "eslint-config-bambi": "^1.4.0",
+    "prettier": "^1.16.4",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
+    "react-native-web": "^0.1.1",
+    "webpack": "^3.6.0"
+  },
+  "peerDependencies": {
+    "react-native-web": "*"
+  },
+  "dependencies": {
+    "google-map-react": "^1.1.5"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:kasajei/react-native-web-google-maps.git"
+  },
+  "keywords": [
+    "react-native",
+    "react-native-web",
+    "react-native-web-maps",
+    "google-maps"
+  ],
+  "author": "progfay",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kasajei/react-native-web-google-maps/issues"
+  },
+  "homepage": "https://github.com/kasajei/react-native-web-google-maps#readme"
+}
