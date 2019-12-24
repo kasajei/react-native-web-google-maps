@@ -9,10 +9,8 @@ class MapView extends Component {
   render() {
     const region = this.props.region || this.props.initialRegion;
     const center = {
-      latitude: region.latitude,
-      longitude: region.longitude,
-      latitudeDelta: 0.38,
-      longitudeDelta: 0.38,
+      lat: region.latitude,
+      lng: region.longitude,
     };
 
     return (
@@ -20,8 +18,7 @@ class MapView extends Component {
         <GoogleMapReact
           bootstrapURLKeys={{ key: 'AIzaSyC5HxR2IAiiLhXIuCQxctsKq7AVp1CaGmI' }}
           center={center}
-          zoom={15}
-          {...this.props}>
+          zoom={15}>
           {this.props.children}
         </GoogleMapReact>
       </View>
