@@ -7,18 +7,22 @@ import Callout from './Callout';
 
 class MapView extends Component {
   render() {
-    const region = this.props.region || this.props.initialRegion;
+    const region =
+      (this.props.camera && this.props.camera.center) ||
+      this.props.region ||
+      this.props.initialRegion;
     const center = {
       lat: region.latitude,
       lng: region.longitude,
     };
+    const zoom = (this.props.camera && this.props.camera.zoom) || 15;
 
     return (
       <View style={this.props.style || styles.container}>
         <GoogleMapReact
           bootstrapURLKeys={{ key: 'AIzaSyC5HxR2IAiiLhXIuCQxctsKq7AVp1CaGmI' }}
           center={center}
-          zoom={15}>
+          zoom={zoom}>
           {this.props.children}
         </GoogleMapReact>
       </View>
