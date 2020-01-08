@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
 class DefaultMarker extends Component {
   render() {
     return (
-      <TouchableOpacity onPress={this.props.onPress}>
+      <TouchableOpacity activeOpacity={1} onPress={this.props.onPress}>
         <Image
           style={styles.defaultMarker}
           title={
@@ -54,7 +54,11 @@ class MapMarker extends Component {
       });
     });
 
-    return <TouchableOpacity onPress={this.props.onPress}>{childrenWithProps}</TouchableOpacity>;
+    return (
+      <TouchableOpacity activeOpacity={1} onPress={this.props.onPress}>
+        {childrenWithProps}
+      </TouchableOpacity>
+    );
   }
 }
 
