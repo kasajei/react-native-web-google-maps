@@ -23,6 +23,13 @@ class MapView extends Component {
           bootstrapURLKeys={{ key: 'AIzaSyC5HxR2IAiiLhXIuCQxctsKq7AVp1CaGmI' }}
           center={center}
           zoom={zoom}
+          onClick={({ lat, lng, x, y }) => {
+            if (typeof this.props.onPress !== 'function') return;
+            this.props.onPress({
+              coordinate: { latitude: lat, longitude: lng },
+              point: { x, y },
+            });
+          }}
           onDrag={({ center }) => {
             if (typeof this.props.onRegionChange !== 'function') return;
             this.props.onRegionChange({ latitude: center.lat(), longitude: center.lng() });
