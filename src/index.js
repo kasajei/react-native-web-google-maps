@@ -22,7 +22,13 @@ class MapView extends Component {
         <GoogleMapReact
           bootstrapURLKeys={{ key: 'AIzaSyC5HxR2IAiiLhXIuCQxctsKq7AVp1CaGmI' }}
           center={center}
-          zoom={zoom}>
+          zoom={zoom}
+          onDrag={({ center }) => {
+            this.props.onRegionChange({ latitude: center.lat(), longitude: center.lng() });
+          }}
+          onDragEnd={({ center }) => {
+            this.props.onRegionChangeComplete({ latitude: center.lat(), longitude: center.lng() });
+          }}>
           {this.props.children}
         </GoogleMapReact>
       </View>
