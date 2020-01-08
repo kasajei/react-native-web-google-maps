@@ -6,6 +6,30 @@ import Polyline from './Polyline';
 import Callout from './Callout';
 
 class MapView extends Component {
+  getCamera() {
+    return {
+      center: {
+        lat: this.map.center.lat(),
+        lng: this.map.center.lng(),
+      },
+      zoom: this.map.zoom,
+    };
+  }
+
+  animateCamera({ center, zoom }) {
+    if (!this.map) return;
+    this.map.setCenter(center);
+    this.map.setZoom(zoom);
+  }
+
+  animateToRegion({ latitude, longitude }) {
+    if (!this.map) return;
+    this.map.setCenter({
+      lat: latitude,
+      lng: longitude,
+    });
+  }
+
   render() {
     const region =
       (this.props.camera && this.props.camera.center) ||
@@ -46,8 +70,12 @@ class MapView extends Component {
             if (typeof this.props.onRegionChangeComplete !== 'function') return;
             this.props.onRegionChangeComplete({ latitude: center.lat(), longitude: center.lng() });
           }}
-          options={this.props.options}>
-          {this.props.children}
+          options={this.props.options}
+          onGoogleApiLoaded={({ map, maps }) => {
+            this.map = map;
+          }}
+          yesIWantToUseGoogleMapApiInternals>
+          {childrenWithProps}
         </GoogleMapReact>
       </View>
     );
