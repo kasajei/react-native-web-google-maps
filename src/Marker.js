@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { TouchableOpacity, Image, StyleSheet } from 'react-native';
+import Callout from './Callout';
 
 const styles = StyleSheet.create({
   defaultMarker: {
@@ -30,8 +31,30 @@ class DefaultMarker extends Component {
 }
 
 class MapMarker extends Component {
+  state = {
+    isOpen: false,
+  };
+
+  showCallout() {
+    this.setState({ isOpen: true });
+  }
+
+  hideCallout() {
+    this.setState({ isOpen: false });
+  }
+
   render() {
-    return <DefaultMarker {...this.props} />;
+    if (!this.props.children) return <DefaultMarker {...this.props} />;
+
+    const childrenWithProps = React.Children.map(this.props.children, child => {
+      if (child.type !== Callout) return child;
+      return React.cloneElement(child, {
+        hideCallout: this.hideCallout.bind(this),
+        isOpen: this.state.isOpen,
+      });
+    });
+
+    return <TouchableOpacity onPress={this.props.onPress}>{childrenWithProps}</TouchableOpacity>;
   }
 }
 
