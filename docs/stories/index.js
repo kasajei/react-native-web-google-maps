@@ -5,6 +5,38 @@ import MapView from 'react-native-maps';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 
+class InfoBox extends React.Component {
+  render() {
+    const styles = StyleSheet.create({
+      container: {
+        marginVertical: 'auto',
+        marginHorizontal: 'auto',
+        padding: 24,
+        backgroundColor: '#81d4fa',
+      },
+      triangle: {
+        position: 'absolute',
+        top: '100%',
+        left: '50%',
+        transform: [{ translateX: '-50%' }],
+        width: 0,
+        height: 0,
+        borderColor: 'transparent',
+        borderWidth: '10px',
+        borderStyle: 'solid',
+        borderTopColor: '#81d4fa',
+      },
+    });
+
+    return (
+      <View style={styles.container}>
+        <View style={styles.triangle} />
+        <Text>{this.props.text}</Text>
+      </View>
+    );
+  }
+}
+
 storiesOf('MapView', module)
   .add('basic', () => (
     <View style={styles.container}>
@@ -77,8 +109,9 @@ storiesOf('Marker', module)
                 lng: 2.3,
               },
             });
-          }}
-        />
+          }}>
+          <Text>Paris</Text>
+        </MapView.Marker>
       </MapView>
     </View>
   ))
@@ -93,9 +126,15 @@ storiesOf('Marker', module)
           onPress={() => {
             this.marker.showCallout();
           }}>
+          <InfoBox text={'Click me'} />
           <MapView.Callout onPress={action('onPress callout')}>
             <View style={{ padding: 10 }}>
-              <Text>Paris</Text>
+              <Text
+                onPress={() => {
+                  this.marker.hideCallout();
+                }}>
+                Callout
+              </Text>
             </View>
           </MapView.Callout>
         </MapView.Marker>
