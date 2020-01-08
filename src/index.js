@@ -24,9 +24,11 @@ class MapView extends Component {
           center={center}
           zoom={zoom}
           onDrag={({ center }) => {
+            if (typeof this.props.onRegionChange !== 'function') return;
             this.props.onRegionChange({ latitude: center.lat(), longitude: center.lng() });
           }}
           onDragEnd={({ center }) => {
+            if (typeof this.props.onRegionChangeComplete !== 'function') return;
             this.props.onRegionChangeComplete({ latitude: center.lat(), longitude: center.lng() });
           }}>
           {this.props.children}
