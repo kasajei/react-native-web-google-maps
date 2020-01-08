@@ -17,6 +17,14 @@ class MapView extends Component {
     };
     const zoom = (this.props.camera && this.props.camera.zoom) || 15;
 
+    const childrenWithProps = React.Children.map(this.props.children, child => {
+      const { latitude, longitude } = child.props.coordinate;
+      return React.cloneElement(child, {
+        lat: latitude,
+        lng: longitude,
+      });
+    });
+
     return (
       <View style={this.props.style || styles.container}>
         <GoogleMapReact
