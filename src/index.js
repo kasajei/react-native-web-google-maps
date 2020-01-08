@@ -37,7 +37,8 @@ class MapView extends Component {
           onDragEnd={({ center }) => {
             if (typeof this.props.onRegionChangeComplete !== 'function') return;
             this.props.onRegionChangeComplete({ latitude: center.lat(), longitude: center.lng() });
-          }}>
+          }}
+          options={this.props.options}>
           {this.props.children}
         </GoogleMapReact>
       </View>
