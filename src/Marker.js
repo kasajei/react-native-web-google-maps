@@ -25,6 +25,7 @@ class DefaultMarker extends Component {
             uri: 'https://maps.gstatic.com/mapfiles/api-3/images/spotlight-poi2_hdpi.png',
           }}
         />
+        {this.props.children}
       </TouchableOpacity>
     );
   }
@@ -44,7 +45,12 @@ class MapMarker extends Component {
   }
 
   render() {
-    if (!this.props.children) return <DefaultMarker {...this.props} />;
+    let hasOnlyCalloutChildren = true;
+
+    React.Children.forEach(this.props.children, child => {
+      if (!hasOnlyCalloutChildren) return;
+      if (child.type !== Callout) hasOnlyCalloutChildren = false;
+    });
 
     const childrenWithProps = React.Children.map(this.props.children, child => {
       if (child.type !== Callout) return child;
@@ -54,7 +60,14 @@ class MapMarker extends Component {
       });
     });
 
-    return (
+    return hasOnlyCalloutChildren ? (
+      <DefaultMarker
+        onPress={this.props.onPress}
+        title={this.props.title}
+        description={this.props.description}>
+        {childrenWithProps}
+      </DefaultMarker>
+    ) : (
       <TouchableOpacity activeOpacity={1} onPress={this.props.onPress}>
         {childrenWithProps}
       </TouchableOpacity>
