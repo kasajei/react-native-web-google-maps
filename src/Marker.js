@@ -29,6 +29,7 @@ class DefaultMarker extends Component {
             uri: 'https://maps.gstatic.com/mapfiles/api-3/images/spotlight-poi2_hdpi.png',
           }}
         />
+        {this.props.children}
       </TouchableOpacity>
     );
   }
@@ -48,16 +49,13 @@ class MapMarker extends Component {
   }
 
   render() {
-    if (!this.props.children)
-      return (
-        <DefaultMarker
-          onPress={this.props.onPress}
-          onMouseEnter={this.props.onMouseOver}
-          title={this.props.title}
-          description={this.props.description}
-          opacity={this.props.opacity}
-        />
-      );
+    const hasOnlyCalloutChildren = React.Children.toArray(this.props.children).reduce(
+      (acc, child) => {
+        if (!acc) return false;
+        return child.type === Callout;
+      },
+      true
+    );
 
     const childrenWithProps = React.Children.map(this.props.children, child => {
       if (child.type !== Callout) return child;
@@ -67,12 +65,22 @@ class MapMarker extends Component {
       });
     });
 
-    return (
+    return hasOnlyCalloutChildren ? (
+      <DefaultMarker
+        onPress={this.props.onPress}
+        title={this.props.title}
+        description={this.props.description}
+        onMouseEnter={this.props.onMouseOver}
+        opacity={this.props.opacity}>
+        {childrenWithProps}
+      </DefaultMarker>
+    ) : (
       <TouchableOpacity
         style={[{ opacity: this.props.opacity }]}
         activeOpacity={1}
         onPress={this.props.onPress}
-        onMouseEnter={this.props.onMouseOver}>
+        onMouseEnter={this.props.onMouseOver}
+        opacity={this.props.opacity}>
         {childrenWithProps}
       </TouchableOpacity>
     );
