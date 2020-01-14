@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "main-es": "src/index.js",
   "scripts": {
-    "prepublish": "yarn build",
+    "prepare": "yarn build",
     "build": "mkdir -p dist && babel src --out-dir dist",
     "test:lint": "yarn eslint . --quiet",
     "test": "yarn test:lint"
