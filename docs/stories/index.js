@@ -76,7 +76,7 @@ storiesOf('MapView', module)
         }}
         options={{
           zoomControlOptions: {
-            position: window.google.maps.ControlPosition.RIGHT_CENTER,
+            position: 8, //window.google.maps.ControlPosition.RIGHT_CENTER,
           },
           mapTypeControl: false,
           streetViewControl: false,
