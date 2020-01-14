@@ -13,7 +13,11 @@ const styles = StyleSheet.create({
 class DefaultMarker extends Component {
   render() {
     return (
-      <TouchableOpacity activeOpacity={1} onPress={this.props.onPress}>
+      <TouchableOpacity
+        activeOpacity={1}
+        onPress={this.props.onPress}
+        onMouseEnter={this.props.onMouseOver}
+        style={[{ opacity: this.props.opacity }]}>
         <Image
           style={styles.defaultMarker}
           title={
@@ -44,7 +48,15 @@ class MapMarker extends Component {
   }
 
   render() {
-    if (!this.props.children) return <DefaultMarker {...this.props} />;
+    if (!this.props.children)
+      return (
+        <DefaultMarker
+          onPress={this.props.onPress}
+          title={this.props.title}
+          description={this.props.description}
+          opacity={this.props.opacity}
+        />
+      );
 
     const childrenWithProps = React.Children.map(this.props.children, child => {
       if (child.type !== Callout) return child;
@@ -55,7 +67,11 @@ class MapMarker extends Component {
     });
 
     return (
-      <TouchableOpacity activeOpacity={1} onPress={this.props.onPress}>
+      <TouchableOpacity
+        style={[{ opacity: this.props.opacity }]}
+        activeOpacity={1}
+        onPress={this.props.onPress}
+        onMouseEnter={this.props.onMouseOver}>
         {childrenWithProps}
       </TouchableOpacity>
     );
