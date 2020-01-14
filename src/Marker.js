@@ -45,12 +45,13 @@ class MapMarker extends Component {
   }
 
   render() {
-    let hasOnlyCalloutChildren = true;
-
-    React.Children.forEach(this.props.children, child => {
-      if (!hasOnlyCalloutChildren) return;
-      if (child.type !== Callout) hasOnlyCalloutChildren = false;
-    });
+    const hasOnlyCalloutChildren = React.Children.toArray(this.props.children).reduce(
+      (acc, child) => {
+        if (!acc) return false;
+        return child.type === Callout;
+      },
+      true
+    );
 
     const childrenWithProps = React.Children.map(this.props.children, child => {
       if (child.type !== Callout) return child;
