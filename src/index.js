@@ -4,6 +4,7 @@ import GoogleMapReact from 'google-map-react';
 import Marker from './Marker';
 import Polyline from './Polyline';
 import Callout from './Callout';
+import Omnibox from './Omnibox';
 
 class MapView extends Component {
   state = {
@@ -58,7 +59,7 @@ class MapView extends Component {
     return (
       <View style={this.props.style || styles.container}>
         <GoogleMapReact
-          bootstrapURLKeys={{ key: 'AIzaSyC5HxR2IAiiLhXIuCQxctsKq7AVp1CaGmI' }}
+          bootstrapURLKeys={{ key: 'AIzaSyC5HxR2IAiiLhXIuCQxctsKq7AVp1CaGmI', libraries: 'places' }}
           center={center}
           zoom={zoom}
           onClick={({ lat, lng, x, y }) => {
@@ -83,6 +84,9 @@ class MapView extends Component {
           yesIWantToUseGoogleMapApiInternals>
           {childrenWithProps}
         </GoogleMapReact>
+        {this.props.omnibox && (
+          <Omnibox {...this.props.omnibox} map={this.state.map} maps={this.state.maps} />
+        )}
       </View>
     );
   }
