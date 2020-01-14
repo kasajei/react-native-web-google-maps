@@ -6,25 +6,31 @@ import Polyline from './Polyline';
 import Callout from './Callout';
 
 class MapView extends Component {
+  state = {
+    map: null,
+    maps: null,
+  };
+
   getCamera() {
+    if (!this.state.map) return;
     return {
       center: {
-        lat: this.map.center.lat(),
-        lng: this.map.center.lng(),
+        lat: this.state.map.center.lat(),
+        lng: this.state.map.center.lng(),
       },
-      zoom: this.map.zoom,
+      zoom: this.state.map.zoom,
     };
   }
 
   animateCamera({ center, zoom }) {
-    if (!this.map) return;
-    this.map.setCenter(center);
-    this.map.setZoom(zoom);
+    if (!this.state.map) return;
+    this.state.map.setCenter(center);
+    this.state.map.setZoom(zoom);
   }
 
   animateToRegion({ latitude, longitude }) {
-    if (!this.map) return;
-    this.map.setCenter({
+    if (!this.state.map) return;
+    this.state.map.setCenter({
       lat: latitude,
       lng: longitude,
     });
@@ -72,7 +78,7 @@ class MapView extends Component {
           }}
           options={this.props.options}
           onGoogleApiLoaded={({ map, maps }) => {
-            this.map = map;
+            this.setState({ map, maps });
           }}
           yesIWantToUseGoogleMapApiInternals>
           {childrenWithProps}
