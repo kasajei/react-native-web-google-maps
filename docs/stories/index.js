@@ -60,6 +60,14 @@ storiesOf('MapView', module)
   .add('options', () => (
     <View style={styles.container}>
       <MapView
+        omnibox={{
+          options: {
+            types: ['(cities)'],
+            componentRestrictions: {
+              country: ['jp'],
+            },
+          },
+        }}
         initialRegion={{
           latitude: 48.86,
           longitude: 2.34,
