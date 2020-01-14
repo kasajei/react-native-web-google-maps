@@ -16,7 +16,7 @@ class DefaultMarker extends Component {
       <TouchableOpacity
         activeOpacity={1}
         onPress={this.props.onPress}
-        onMouseEnter={this.props.onMouseOver}
+        onMouseEnter={this.props.onMouseEnter}
         style={[{ opacity: this.props.opacity }]}>
         <Image
           style={styles.defaultMarker}
@@ -52,6 +52,7 @@ class MapMarker extends Component {
       return (
         <DefaultMarker
           onPress={this.props.onPress}
+          onMouseEnter={this.props.onMouseOver}
           title={this.props.title}
           description={this.props.description}
           opacity={this.props.opacity}
