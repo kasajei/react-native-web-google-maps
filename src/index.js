@@ -39,7 +39,7 @@ class MapView extends Component {
       lat: region.latitude,
       lng: region.longitude,
     };
-    const zoom = (this.props.camera && this.props.camera.zoom) || 15;
+    const zoom = (this.props.camera && this.props.camera.zoom) || this.props.defaultZoom || 15;
 
     const childrenWithProps = React.Children.map(this.props.children, child => {
       const { latitude, longitude } = child.props.coordinate;

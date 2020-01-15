@@ -13,7 +13,11 @@ const styles = StyleSheet.create({
 class DefaultMarker extends Component {
   render() {
     return (
-      <TouchableOpacity activeOpacity={1} onPress={this.props.onPress}>
+      <TouchableOpacity
+        activeOpacity={1}
+        onPress={this.props.onPress}
+        onMouseEnter={this.props.onMouseEnter}
+        style={[{ opacity: this.props.opacity }]}>
         <Image
           style={styles.defaultMarker}
           title={
@@ -65,11 +69,18 @@ class MapMarker extends Component {
       <DefaultMarker
         onPress={this.props.onPress}
         title={this.props.title}
-        description={this.props.description}>
+        description={this.props.description}
+        onMouseEnter={this.props.onMouseOver}
+        opacity={this.props.opacity}>
         {childrenWithProps}
       </DefaultMarker>
     ) : (
-      <TouchableOpacity activeOpacity={1} onPress={this.props.onPress}>
+      <TouchableOpacity
+        style={[{ opacity: this.props.opacity }]}
+        activeOpacity={1}
+        onPress={this.props.onPress}
+        onMouseEnter={this.props.onMouseOver}
+        opacity={this.props.opacity}>
         {childrenWithProps}
       </TouchableOpacity>
     );
