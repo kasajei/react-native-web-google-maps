@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, TextInput } from 'react-native';
 
 const styles = StyleSheet.create({
   omnibox: {
@@ -16,6 +16,14 @@ const styles = StyleSheet.create({
       width: '0',
       height: '2px',
     },
+  },
+  input: {
+    width: '400px',
+    height: '50px',
+    borderWidth: 0,
+    borderRadius: '4px',
+    fontSize: '1rem',
+    paddingHorizontal: '10px',
   },
 });
 
@@ -45,22 +53,17 @@ class MapOmnibox extends Component {
 
     return (
       <View style={styles.omnibox}>
-        <input
+        <TextInput
           type="text"
           id="omnibox"
           autoFocus
-          style={{
-            width: '400px',
-            height: '50px',
-            border: 'none',
-            borderRadius: '4px',
-            fontSize: '1rem',
-            padding: '0 10px',
-          }}
+          style={styles.input}
           ref={ref => {
             if (!ref) return;
-            this.inputRef = ref;
-            this.autocomplete = new this.props.maps.places.Autocomplete(ref, this.props.options);
+            this.autocomplete = new this.props.maps.places.Autocomplete(
+              ref._node,
+              this.props.options
+            );
             this.autocomplete.addListener('place_changed', this.onPlaceChanged);
           }}
         />
