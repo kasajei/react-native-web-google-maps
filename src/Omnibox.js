@@ -24,6 +24,7 @@ const styles = StyleSheet.create({
     borderRadius: '4px',
     fontSize: '1rem',
     paddingHorizontal: '10px',
+    outline: 'none',
   },
 });
 
@@ -67,7 +68,6 @@ class MapOmnibox extends Component {
             this.autocomplete.addListener('place_changed', this.onPlaceChanged);
           }}
         />
-        <style> {'#omnibox:focus { outline: none }'} </style>
       </View>
     );
   }
