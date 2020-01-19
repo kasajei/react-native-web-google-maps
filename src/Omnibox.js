@@ -27,14 +27,17 @@ class MapOmnibox extends Component {
 
   onPlaceChanged() {
     const place = this.autocomplete.getPlace();
+
+    if (this.props.options && this.props.options.onPlaceChanged) {
+      this.props.options.onPlaceChanged(place);
+      return;
+    }
+
     const { lat, lng } = place.geometry.location;
     this.props.map.setCenter({
       lat: lat(),
       lng: lng(),
     });
-    if (this.props.options && this.props.options.onPlaceChanged) {
-      this.props.options.onPlaceChanged(place);
-    }
   }
 
   render() {
