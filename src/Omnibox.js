@@ -32,6 +32,9 @@ class MapOmnibox extends Component {
       lat: lat(),
       lng: lng(),
     });
+    if (this.props.options && this.props.options.onPlaceChanged) {
+      this.props.options.onPlaceChanged(place);
+    }
   }
 
   render() {
