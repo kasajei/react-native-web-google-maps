@@ -5,7 +5,17 @@ const styles = StyleSheet.create({
   omnibox: {
     position: 'absolute',
     margin: '10px',
-    width: '400px',
+    backgroundColor: 'white',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: '4px',
+    shadowColor: 'rgba(0, 0, 0, .2)',
+    shadowRadius: '4px',
+    shadowOffset: {
+      width: '0',
+      height: '2px',
+    },
   },
 });
 
@@ -31,13 +41,23 @@ class MapOmnibox extends Component {
       <View style={styles.omnibox}>
         <input
           type="text"
+          id="omnibox"
           autoFocus
+          style={{
+            width: '400px',
+            height: '50px',
+            border: 'none',
+            borderRadius: '4px',
+            fontSize: '1rem',
+            padding: '0 10px',
+          }}
           ref={ref => {
             this.inputRef = ref;
             this.autocomplete = new this.props.maps.places.Autocomplete(ref, this.props.options);
             this.autocomplete.addListener('place_changed', this.onPlaceChanged);
           }}
         />
+        <style> {'#omnibox:focus { outline: none }'} </style>
       </View>
     );
   }
