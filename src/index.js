@@ -84,8 +84,12 @@ class MapView extends Component {
           yesIWantToUseGoogleMapApiInternals>
           {childrenWithProps}
         </GoogleMapReact>
-        {this.props.omnibox && (
-          <Omnibox {...this.props.omnibox} map={this.state.map} maps={this.state.maps} />
+        {this.props.options && this.props.options.omniboxControl && (
+          <Omnibox
+            options={this.props.options.omniboxControlOptions}
+            map={this.state.map}
+            maps={this.state.maps}
+          />
         )}
       </View>
     );

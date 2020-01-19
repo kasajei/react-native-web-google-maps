@@ -52,6 +52,7 @@ class MapOmnibox extends Component {
             padding: '0 10px',
           }}
           ref={ref => {
+            if (!ref) return;
             this.inputRef = ref;
             this.autocomplete = new this.props.maps.places.Autocomplete(ref, this.props.options);
             this.autocomplete.addListener('place_changed', this.onPlaceChanged);
