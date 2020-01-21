@@ -25,14 +25,16 @@ const styles = StyleSheet.create({
     borderRadius: '4px',
     fontSize: '1rem',
     outline: 'none',
-    paddingHorizontal: '10px',
+    paddingLeft: 10,
+    paddingRight: 44,
   },
   searchButton: {
+    position: 'absolute',
+    right: 10,
     width: 24,
     height: 24,
     overflow: 'hidden',
     resizeMode: 'cover',
-    marginHorizontal: '10px',
   },
   searchIcon: {
     width: 72,
