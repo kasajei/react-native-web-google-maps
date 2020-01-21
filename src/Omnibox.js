@@ -46,8 +46,30 @@ class MapOmnibox extends Component {
     this.onPlaceChanged = this.onPlaceChanged.bind(this);
   }
 
+  // eslint-disable-next-line bam/no-react-unbound
   onPlaceChanged() {
     const place = this.autocomplete.getPlace();
+
+    if (!place || !place.geometry) {
+      this.placesService.findPlaceFromQuery(
+        {
+          query: this.inputRef.value,
+          fields: ['ALL'],
+        },
+        this.props.options && this.props.options.onPlaceChanged
+          ? result => {
+              this.props.options.onPlaceChanged(result[0]);
+            }
+          : result => {
+              const { lat, lng } = result[0].geometry.location;
+              this.props.map.setCenter({
+                lat: lat(),
+                lng: lng(),
+              });
+            }
+      );
+      return;
+    }
 
     if (this.props.options && this.props.options.onPlaceChanged) {
       this.props.options.onPlaceChanged(place);
@@ -67,12 +89,12 @@ class MapOmnibox extends Component {
     return (
       <View style={styles.omnibox}>
         <TextInput
-          type="text"
-          id="omnibox"
           autoFocus
           style={styles.input}
           ref={ref => {
             if (!ref) return;
+            this.inputRef = ref._node;
+            this.placesService = new this.props.maps.places.PlacesService(this.props.map);
             this.autocomplete = new this.props.maps.places.Autocomplete(
               ref._node,
               this.props.options
