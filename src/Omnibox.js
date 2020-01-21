@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
     },
     flexDirection: 'row',
   },
-  input: {
+  textInput: {
     width: '350px',
     height: '50px',
     borderWidth: 0,
@@ -34,7 +34,6 @@ const styles = StyleSheet.create({
     width: 24,
     height: 24,
     overflow: 'hidden',
-    resizeMode: 'cover',
   },
   searchIcon: {
     width: 72,
@@ -89,10 +88,10 @@ class MapOmnibox extends Component {
     if (!this.props.map || !this.props.maps) return null;
 
     return (
-      <View style={[styles.omnibox, this.props.styles.omnibox]}>
+      <View style={[styles.omnibox, this.props.styles && this.props.styles.omnibox]}>
         <TextInput
           autoFocus
-          style={[styles.textInput, this.props.styles.textInput]}
+          style={[styles.textInput, this.props.styles && this.props.styles.textInput]}
           ref={ref => {
             if (!ref) return;
             this.inputRef = ref._node;
@@ -105,10 +104,10 @@ class MapOmnibox extends Component {
           }}
         />
         <TouchableOpacity
-          style={[styles.searchButton, this.props.styles.searchButton]}
+          style={[styles.searchButton, this.props.styles && this.props.styles.searchButton]}
           onPress={this.onPlaceChanged}>
           <Image
-            style={[styles.searchIcon, this.props.styles.searchIcon]}
+            style={[styles.searchIcon, this.props.styles && this.props.styles.searchIcon]}
             source={{
               uri: 'https://maps.gstatic.com/tactile/omnibox/quantum_search_button-20150825-2x.png',
             }}
