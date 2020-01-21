@@ -7,6 +7,7 @@ const styles = StyleSheet.create({
     width: '27px',
     height: '43px',
     resizeMode: 'stretch',
+    transform: [{ translateX: '-50%' }, { translateY: '-100%' }],
   },
 });
 
