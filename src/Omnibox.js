@@ -87,10 +87,10 @@ class MapOmnibox extends Component {
     if (!this.props.map || !this.props.maps) return null;
 
     return (
-      <View style={styles.omnibox}>
+      <View style={[styles.omnibox, this.props.styles.omnibox]}>
         <TextInput
           autoFocus
-          style={styles.input}
+          style={[styles.textInput, this.props.styles.textInput]}
           ref={ref => {
             if (!ref) return;
             this.inputRef = ref._node;
@@ -102,9 +102,11 @@ class MapOmnibox extends Component {
             this.autocomplete.addListener('place_changed', this.onPlaceChanged);
           }}
         />
-        <TouchableOpacity style={styles.searchButton} onPress={this.onPlaceChanged}>
+        <TouchableOpacity
+          style={[styles.searchButton, this.props.styles.searchButton]}
+          onPress={this.onPlaceChanged}>
           <Image
-            style={styles.searchIcon}
+            style={[styles.searchIcon, this.props.styles.searchIcon]}
             source={{
               uri: 'https://maps.gstatic.com/tactile/omnibox/quantum_search_button-20150825-2x.png',
             }}
