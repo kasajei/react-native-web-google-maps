@@ -21,9 +21,11 @@ class DefaultMarker extends Component {
               ? `${this.props.title}\n${this.props.description}`
               : this.props.title
           }
-          source={{
-            uri: 'https://maps.gstatic.com/mapfiles/api-3/images/spotlight-poi2_hdpi.png',
-          }}
+          source={
+            this.props.source || {
+              uri: 'https://maps.gstatic.com/mapfiles/api-3/images/spotlight-poi2_hdpi.png',
+            }
+          }
         />
         {this.props.children}
       </TouchableOpacity>
@@ -65,7 +67,8 @@ class MapMarker extends Component {
       <DefaultMarker
         onPress={this.props.onPress}
         title={this.props.title}
-        description={this.props.description}>
+        description={this.props.description}
+        source={this.props.source}>
         {childrenWithProps}
       </DefaultMarker>
     ) : (
