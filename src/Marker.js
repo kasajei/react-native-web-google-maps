@@ -6,7 +6,12 @@ const styles = StyleSheet.create({
   defaultMarker: {
     width: '27px',
     height: '43px',
+    transform: [{ translateX: '-50%' }, { translateY: '-100%' }],
+  },
+  defaultMarkerImage: {
     resizeMode: 'stretch',
+    width: '100%',
+    height: '100%',
   },
 });
 
@@ -17,17 +22,19 @@ class DefaultMarker extends Component {
         activeOpacity={1}
         onPress={this.props.onPress}
         onMouseEnter={this.props.onMouseEnter}
-        style={[{ opacity: this.props.opacity }]}>
+        style={[styles.defaultMarker, this.props.style, { opacity: this.props.opacity }]}>
         <Image
-          style={styles.defaultMarker}
+          style={styles.defaultMarkerImage}
           title={
             this.props.description
               ? `${this.props.title}\n${this.props.description}`
               : this.props.title
           }
-          source={{
-            uri: 'https://maps.gstatic.com/mapfiles/api-3/images/spotlight-poi2_hdpi.png',
-          }}
+          source={
+            this.props.icon || {
+              uri: 'https://maps.gstatic.com/mapfiles/api-3/images/spotlight-poi2_hdpi.png',
+            }
+          }
         />
         {this.props.children}
       </TouchableOpacity>
@@ -67,16 +74,18 @@ class MapMarker extends Component {
 
     return hasOnlyCalloutChildren ? (
       <DefaultMarker
+        style={this.props.style}
         onPress={this.props.onPress}
         title={this.props.title}
         description={this.props.description}
+        icon={this.props.icon}
         onMouseEnter={this.props.onMouseOver}
         opacity={this.props.opacity}>
         {childrenWithProps}
       </DefaultMarker>
     ) : (
       <TouchableOpacity
-        style={[{ opacity: this.props.opacity }]}
+        style={[this.props.style, { opacity: this.props.opacity }]}
         activeOpacity={1}
         onPress={this.props.onPress}
         onMouseEnter={this.props.onMouseOver}
