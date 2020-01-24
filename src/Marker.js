@@ -9,6 +9,10 @@ const styles = StyleSheet.create({
     resizeMode: 'stretch',
     transform: [{ translateX: '-50%' }, { translateY: '-100%' }],
   },
+  defaultMarkerImage: {
+    width: '100%',
+    height: '100%',
+  },
 });
 
 class DefaultMarker extends Component {
@@ -18,9 +22,9 @@ class DefaultMarker extends Component {
         activeOpacity={1}
         onPress={this.props.onPress}
         onMouseEnter={this.props.onMouseEnter}
-        style={[{ opacity: this.props.opacity }]}>
+        style={[styles.defaultMarker, this.props.style, { opacity: this.props.opacity }]}>
         <Image
-          style={styles.defaultMarker}
+          style={styles.defaultMarkerImage}
           title={
             this.props.description
               ? `${this.props.title}\n${this.props.description}`
@@ -70,6 +74,7 @@ class MapMarker extends Component {
 
     return hasOnlyCalloutChildren ? (
       <DefaultMarker
+        style={this.props.style}
         onPress={this.props.onPress}
         title={this.props.title}
         description={this.props.description}
@@ -80,7 +85,7 @@ class MapMarker extends Component {
       </DefaultMarker>
     ) : (
       <TouchableOpacity
-        style={[{ opacity: this.props.opacity }]}
+        style={[this.props.style, { opacity: this.props.opacity }]}
         activeOpacity={1}
         onPress={this.props.onPress}
         onMouseEnter={this.props.onMouseOver}
