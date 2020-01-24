@@ -27,7 +27,7 @@ class DefaultMarker extends Component {
               : this.props.title
           }
           source={
-            this.props.source || {
+            this.props.icon || {
               uri: 'https://maps.gstatic.com/mapfiles/api-3/images/spotlight-poi2_hdpi.png',
             }
           }
@@ -73,7 +73,7 @@ class MapMarker extends Component {
         onPress={this.props.onPress}
         title={this.props.title}
         description={this.props.description}
-        source={this.props.source}
+        icon={this.props.icon}
         onMouseEnter={this.props.onMouseOver}
         opacity={this.props.opacity}>
         {childrenWithProps}
