@@ -58,3 +58,6 @@ See the [storybook](https://kasajei.github.io/react-native-web-google-maps/story
 ## Contributing
 
 PRs are welcome!
+
+## License
+MIT
