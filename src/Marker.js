@@ -6,10 +6,10 @@ const styles = StyleSheet.create({
   defaultMarker: {
     width: '27px',
     height: '43px',
-    resizeMode: 'stretch',
     transform: [{ translateX: '-50%' }, { translateY: '-100%' }],
   },
   defaultMarkerImage: {
+    resizeMode: 'stretch',
     width: '100%',
     height: '100%',
   },
