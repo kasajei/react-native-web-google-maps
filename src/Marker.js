@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { TouchableOpacity, Image, StyleSheet } from 'react-native';
+import { View, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import Callout from './Callout';
 
 const styles = StyleSheet.create({
@@ -22,9 +22,9 @@ class DefaultMarker extends Component {
         activeOpacity={1}
         onPress={this.props.onPress}
         onMouseEnter={this.props.onMouseEnter}
-        style={[styles.defaultMarker, this.props.style, { opacity: this.props.opacity }]}>
+        style={[styles.defaultMarker, this.props.style]}>
         <Image
-          style={styles.defaultMarkerImage}
+          style={[styles.defaultMarkerImage, { opacity: this.props.opacity }]}
           title={
             this.props.description
               ? `${this.props.title}\n${this.props.description}`
@@ -56,23 +56,23 @@ class MapMarker extends Component {
   }
 
   render() {
-    const hasOnlyCalloutChildren = React.Children.toArray(this.props.children).reduce(
-      (acc, child) => {
-        if (!acc) return false;
-        return child.type === Callout;
-      },
-      true
-    );
+    const calloutChildren = [];
+    const markerChildren = [];
 
-    const childrenWithProps = React.Children.map(this.props.children, child => {
-      if (child.type !== Callout) return child;
-      return React.cloneElement(child, {
-        hideCallout: this.hideCallout.bind(this),
-        isOpen: this.state.isOpen,
-      });
+    React.Children.forEach(this.props.children, child => {
+      if (child.type !== Callout) {
+        markerChildren.push(child);
+      } else {
+        calloutChildren.push(
+          React.cloneElement(child, {
+            hideCallout: this.hideCallout.bind(this),
+            isOpen: this.state.isOpen,
+          })
+        );
+      }
     });
 
-    return hasOnlyCalloutChildren ? (
+    return markerChildren.length === 0 ? (
       <DefaultMarker
         style={this.props.style}
         onPress={this.props.onPress}
@@ -81,17 +81,20 @@ class MapMarker extends Component {
         icon={this.props.icon}
         onMouseEnter={this.props.onMouseOver}
         opacity={this.props.opacity}>
-        {childrenWithProps}
+        {calloutChildren}
       </DefaultMarker>
     ) : (
-      <TouchableOpacity
-        style={[this.props.style, { opacity: this.props.opacity }]}
-        activeOpacity={1}
-        onPress={this.props.onPress}
-        onMouseEnter={this.props.onMouseOver}
-        opacity={this.props.opacity}>
-        {childrenWithProps}
-      </TouchableOpacity>
+      <View>
+        <TouchableOpacity
+          style={[this.props.style, { opacity: this.props.opacity }]}
+          activeOpacity={1}
+          onPress={this.props.onPress}
+          onMouseEnter={this.props.onMouseOver}
+          opacity={this.props.opacity}>
+          {markerChildren}
+        </TouchableOpacity>
+        {calloutChildren}
+      </View>
     );
   }
 }
