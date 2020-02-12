@@ -1,6 +1,6 @@
 {
   "name": "react-native-web-google-maps",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Google map library for react that allows rendering components as markers 🎉",
   "main": "dist/index.js",
   "main-es": "src/index.js",
@@ -55,5 +55,7 @@
     "url": "https://github.com/kasajei/react-native-web-google-maps/issues"
   },
   "homepage": "https://github.com/kasajei/react-native-web-google-maps#readme",
-  "publishConfig": { "registry": "https://npm.pkg.github.com" }
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  }
 }
