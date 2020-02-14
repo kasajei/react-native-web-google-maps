@@ -98,6 +98,9 @@ class MapOmnibox extends Component {
             if (!ref) return;
             this.inputRef = ref._node;
             this.placesService = new this.props.maps.places.PlacesService(this.props.map);
+            if (this.props.options && this.props.options.placeholder) {
+              ref._node.placeholder = this.props.options.placeholder;
+            }
             this.autocomplete = new this.props.maps.places.Autocomplete(
               ref._node,
               this.props.options
