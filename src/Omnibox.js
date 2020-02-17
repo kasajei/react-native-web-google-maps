@@ -24,7 +24,6 @@ const styles = StyleSheet.create({
     borderWidth: 0,
     borderRadius: '4px',
     fontSize: '1rem',
-    outline: 'none',
     paddingLeft: 10,
     paddingRight: 44,
   },
