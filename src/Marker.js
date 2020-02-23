@@ -1,48 +1,42 @@
-import React, { Component } from 'react';
-import { View, TouchableOpacity, Image, StyleSheet } from 'react-native';
+import React, { PureComponent } from 'react';
+import { View, TouchableOpacity } from 'react-native';
 import Callout from './Callout';
 
-const styles = StyleSheet.create({
-  defaultMarker: {
-    width: '27px',
-    height: '43px',
-    transform: [{ translateX: '-50%' }, { translateY: '-100%' }],
-  },
-  defaultMarkerImage: {
-    resizeMode: 'stretch',
-    width: '100%',
-    height: '100%',
-  },
-});
+class DefaultMarker extends PureComponent {
+  marker = null;
+  listeners = [];
 
-class DefaultMarker extends Component {
+  componentDidUpdate() {
+    if (this.marker || !this.props.map || !this.props.maps) return;
+    this.marker = new this.props.maps.Marker({
+      position: { lat: this.props.lat, lng: this.props.lng },
+      icon: this.props.icon && this.props.icon.url,
+      opacity: this.props.opacity || 1,
+      title: this.props.description
+        ? `${this.props.title}\n${this.props.description}`
+        : this.props.title,
+      map: this.props.map,
+    });
+    if (this.props.onPress) {
+      this.listeners.push(this.marker.addListener('click', this.props.onPress));
+    }
+    if (this.props.onMouseEnter) {
+      this.listeners.push(this.marker.addListener('mouseover', this.props.onMouseEnter));
+    }
+  }
+
+  componentWillUnmount() {
+    if (!this.marker) return;
+    this.marker.setMap(null);
+    this.listeners.forEach(listener => this.props.maps.event.removeListener(listener));
+  }
+
   render() {
-    return (
-      <TouchableOpacity
-        activeOpacity={1}
-        onPress={this.props.onPress}
-        onMouseEnter={this.props.onMouseEnter}
-        style={[styles.defaultMarker, this.props.style]}>
-        <Image
-          style={[styles.defaultMarkerImage, { opacity: this.props.opacity }]}
-          title={
-            this.props.description
-              ? `${this.props.title}\n${this.props.description}`
-              : this.props.title
-          }
-          source={
-            this.props.icon || {
-              uri: 'https://maps.gstatic.com/mapfiles/api-3/images/spotlight-poi2_hdpi.png',
-            }
-          }
-        />
-        {this.props.children}
-      </TouchableOpacity>
-    );
+    return this.props.children;
   }
 }
 
-class MapMarker extends Component {
+class MapMarker extends PureComponent {
   state = {
     isOpen: false,
   };
@@ -74,13 +68,16 @@ class MapMarker extends Component {
 
     return markerChildren.length === 0 ? (
       <DefaultMarker
-        style={this.props.style}
         onPress={this.props.onPress}
         title={this.props.title}
         description={this.props.description}
         icon={this.props.icon}
         onMouseEnter={this.props.onMouseOver}
-        opacity={this.props.opacity}>
+        opacity={this.props.opacity}
+        lat={this.props.lat}
+        lng={this.props.lng}
+        map={this.props.map}
+        maps={this.props.maps}>
         {calloutChildren}
       </DefaultMarker>
     ) : (

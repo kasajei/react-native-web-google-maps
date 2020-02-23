@@ -53,6 +53,8 @@ class MapView extends Component {
       return React.cloneElement(child, {
         lat: latitude,
         lng: longitude,
+        map: this.state.map,
+        maps: this.state.maps,
       });
     });
 
