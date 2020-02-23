@@ -59,7 +59,7 @@ class MapMarker extends Component {
     const calloutChildren = [];
     const markerChildren = [];
 
-    React.Children.forEach(this.props.children, child => {
+    React.Children.forEach(this.props.children, (child, index) => {
       if (child.type !== Callout) {
         markerChildren.push(child);
       } else {
@@ -67,6 +67,7 @@ class MapMarker extends Component {
           React.cloneElement(child, {
             hideCallout: this.hideCallout.bind(this),
             isOpen: this.state.isOpen,
+            key: child.props.key || index,
           })
         );
       }
