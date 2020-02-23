@@ -3,6 +3,7 @@ import { View, StyleSheet } from 'react-native';
 import GoogleMapReact from 'google-map-react';
 import Marker from './Marker';
 import Polyline from './Polyline';
+import Heatmap from './Heatmap';
 import Callout from './Callout';
 import Omnibox from './Omnibox';
 
@@ -49,6 +50,13 @@ class MapView extends Component {
     const zoom = (this.props.camera && this.props.camera.zoom) || this.props.defaultZoom || 15;
 
     const childrenWithProps = React.Children.map(this.props.children, child => {
+      if (child.type === Heatmap) {
+        return React.cloneElement(child, {
+          map: this.state.map,
+          maps: this.state.maps,
+        });
+      }
+
       const { latitude, longitude } = child.props.coordinate;
       return React.cloneElement(child, {
         lat: latitude,
@@ -59,7 +67,10 @@ class MapView extends Component {
     return (
       <View style={this.props.style || styles.container}>
         <GoogleMapReact
-          bootstrapURLKeys={{ key: 'AIzaSyC5HxR2IAiiLhXIuCQxctsKq7AVp1CaGmI', libraries: 'places' }}
+          bootstrapURLKeys={{
+            key: 'AIzaSyC5HxR2IAiiLhXIuCQxctsKq7AVp1CaGmI',
+            libraries: 'places,visualization',
+          }}
           center={center}
           zoom={zoom}
           onClick={({ lat, lng, x, y }) => {
@@ -98,6 +109,7 @@ class MapView extends Component {
 
 MapView.Marker = Marker;
 MapView.Polyline = Polyline;
+MapView.Heatmap = Heatmap;
 MapView.Callout = Callout;
 
 const styles = StyleSheet.create({

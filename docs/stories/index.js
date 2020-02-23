@@ -5,6 +5,8 @@ import MapView from 'react-native-maps';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 
+import heatmapPoints from './heatmapPoints';
+
 class InfoBox extends React.Component {
   render() {
     const styles = StyleSheet.create({
@@ -148,6 +150,17 @@ storiesOf('Marker', module)
       </MapView>
     </View>
   ));
+
+storiesOf('Heatmap', module).add('basic', () => (
+  <View style={styles.container}>
+    <MapView
+      ref={map => (this.map = map)}
+      region={{ latitude: 37.775, longitude: -122.434 }}
+      defaultZoom={13}>
+      <MapView.Heatmap points={heatmapPoints} radius={30} opacity={0.5} />
+    </MapView>
+  </View>
+));
 
 const styles = StyleSheet.create({
   container: {
