@@ -51,7 +51,6 @@ class MapView extends Component {
 
     const childrenWithProps = React.Children.map(this.props.children, child => {
       if (child.type === Overlay) {
-        if (this.state.timeout) return null;
         return React.cloneElement(child, {
           map: this.state.map,
           maps: this.state.maps,
