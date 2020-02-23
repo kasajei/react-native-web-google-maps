@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, StyleSheet } from 'react-native';
 import GoogleMapReact from 'google-map-react';
 import Marker from './Marker';
+import Overlay from './Overlay';
 import Polyline from './Polyline';
 import Callout from './Callout';
 import Omnibox from './Omnibox';
@@ -49,6 +50,14 @@ class MapView extends Component {
     const zoom = (this.props.camera && this.props.camera.zoom) || this.props.defaultZoom || 15;
 
     const childrenWithProps = React.Children.map(this.props.children, child => {
+      if (child.type === Overlay) {
+        if (this.state.timeout) return null;
+        return React.cloneElement(child, {
+          map: this.state.map,
+          maps: this.state.maps,
+        });
+      }
+
       const { latitude, longitude } = child.props.coordinate;
       return React.cloneElement(child, {
         lat: latitude,
@@ -97,6 +106,7 @@ class MapView extends Component {
 }
 
 MapView.Marker = Marker;
+MapView.Overlay = Overlay;
 MapView.Polyline = Polyline;
 MapView.Callout = Callout;
 
