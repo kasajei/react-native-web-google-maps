@@ -7,7 +7,6 @@ class MapHeatmap extends React.PureComponent {
   }
 
   componentDidUpdate() {
-    console.log('update');
     if (this.heatmap) {
       this.heatmap.setOptions({
         opacity: typeof this.props.opacity === 'number' ? this.props.opacity : 0.7,
