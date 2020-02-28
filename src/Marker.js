@@ -1,13 +1,41 @@
-import React, { PureComponent } from 'react';
+import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import Callout from './Callout';
 
-class DefaultMarker extends PureComponent {
+class DefaultMarker extends React.Component {
   marker = null;
   listeners = [];
 
+  shouldComponentUpdate(nextProps) {
+    return (
+      (!this.props.map && nextProps.map) ||
+      (!this.props.maps && nextProps.maps) ||
+      this.props.onPress !== nextProps.onPress ||
+      this.props.onMouseEnter !== nextProps.onMouseEnter ||
+      this.props.icon !== nextProps.icon ||
+      this.props.title !== nextProps.title ||
+      this.props.description !== nextProps.description ||
+      this.props.lat !== nextProps.lat ||
+      this.props.lng !== nextProps.lng ||
+      this.props.opacity !== nextProps.opacity
+    );
+  }
+
   componentDidUpdate() {
-    if (this.marker || !this.props.map || !this.props.maps) return;
+    if (this.marker) {
+      this.marker.setOptions({
+        position: { lat: this.props.lat, lng: this.props.lng },
+        icon: this.props.icon && this.props.icon.url,
+        opacity: this.props.opacity || 1,
+        title: this.props.description
+          ? `${this.props.title}\n${this.props.description}`
+          : this.props.title,
+        map: this.props.map,
+      });
+      return;
+    }
+
+    if (!this.props.map || !this.props.maps) return;
     this.marker = new this.props.maps.Marker({
       position: { lat: this.props.lat, lng: this.props.lng },
       icon: this.props.icon && this.props.icon.url,
@@ -36,7 +64,7 @@ class DefaultMarker extends PureComponent {
   }
 }
 
-class MapMarker extends PureComponent {
+class MapMarker extends React.PureComponent {
   state = {
     isOpen: false,
   };
