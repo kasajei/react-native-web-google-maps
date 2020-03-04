@@ -13,6 +13,11 @@ class InfoBox extends React.Component {
         marginHorizontal: 'auto',
         padding: 24,
         backgroundColor: '#81d4fa',
+        position: 'relative',
+        transform: [
+          { translateX: 'calc(-50% + 13.5px)' },
+          { translateY: 'calc(-100% - 43px - 20px)' },
+        ],
       },
       triangle: {
         position: 'absolute',
@@ -127,23 +132,45 @@ storiesOf('Marker', module)
       <MapView ref={map => (this.map = map)} region={{ latitude: 48.88, longitude: 2.32 }}>
         <MapView.Marker
           title="BAM"
+          description="Shape the future of mobile with us"
+          coordinate={{ latitude: 48.8928463, longitude: 2.3229091 }}
+        />
+        <MapView.Marker
+          title="BAM"
           ref={marker => (this.marker = marker)}
           description="Shape the future of mobile with us"
           coordinate={{ latitude: 48.8828463, longitude: 2.3229091 }}
           onPress={() => {
             this.marker.showCallout();
           }}>
-          <InfoBox text={'Click me'} />
-          <MapView.Callout onPress={action('onPress callout')}>
-            <View style={{ padding: 10 }}>
-              <Text
-                onPress={() => {
-                  this.marker.hideCallout();
-                }}>
-                Callout
-              </Text>
-            </View>
+          <MapView.Callout
+            onPress={() => {
+              this.marker.hideCallout();
+            }}>
+            <InfoBox text={'Click me'} />
           </MapView.Callout>
+        </MapView.Marker>
+        <MapView.Marker
+          title="BAM"
+          description="Shape the future of mobile with us"
+          coordinate={{ latitude: 48.9028463, longitude: 2.3229091 }}
+          style={{ zIndex: -1 }}
+        />
+      </MapView>
+    </View>
+  ))
+  .add('Custom Marker & Callout', () => (
+    <View style={styles.container}>
+      <MapView ref={map => (this.map = map)} region={{ latitude: 48.88, longitude: 2.32 }}>
+        <MapView.Marker
+          title="BAM"
+          ref={marker => (this.marker = marker)}
+          description="Shape the future of mobile with us"
+          coordinate={{ latitude: 48.8828463, longitude: 2.3229091 }}
+          onPress={() => {
+            this.marker.showCallout();
+          }}>
+          <InfoBox text={'Custom Marker'} />
         </MapView.Marker>
       </MapView>
     </View>
