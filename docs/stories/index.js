@@ -176,6 +176,20 @@ storiesOf('Marker', module)
     </View>
   ));
 
+storiesOf('Overlay', module).add('basic', () => (
+  <View style={styles.container}>
+    <MapView
+      ref={map => (this.map = map)}
+      region={{ latitude: 40.74, longitude: -74.18 }}
+      defaultZoom={13}>
+      <MapView.Overlay
+        image={{ uri: 'https://www.lib.utexas.edu/maps/historical/newark_nj_1922.jpg' }}
+        bounds={[[40.773941, -74.22655], [40.712216, -74.12544]]}
+      />
+    </MapView>
+  </View>
+));
+
 const styles = StyleSheet.create({
   container: {
     height: '100vh',
